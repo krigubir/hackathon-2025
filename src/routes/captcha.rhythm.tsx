@@ -196,13 +196,16 @@ function RhythmCaptcha() {
       <div className="space-y-6">
         {!isPlaying ? (
           <div className="text-center py-12">
-            <div className="mb-8">
-              <p className="text-muted mb-4">
+            <div className="mb-8 space-y-6">
+              <p className="text-muted">
                 This test verifies human rhythm perception and motor coordination.
               </p>
-              <div className="flex justify-center gap-2 mb-6">
+              <div className="flex justify-center gap-4">
                 {KEYS.map(key => (
-                  <div key={key} className="px-6 py-3 bg-border rounded text-accent font-bold text-xl uppercase">
+                  <div
+                    key={key}
+                    className="rounded-2xl border border-border-glow/40 bg-white/5 px-6 py-3 text-xl font-bold uppercase text-accent-bright shadow-glow"
+                  >
                     {key}
                   </div>
                 ))}
@@ -212,14 +215,16 @@ function RhythmCaptcha() {
           </div>
         ) : (
           <>
-            <div className="bg-border/20 rounded-lg p-4 mb-4">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted">Hits: <span className="text-accent">{score.hits}</span></span>
-                <span className="text-muted">Misses: <span className="text-red-500">{score.misses}</span></span>
-              </div>
+            <div className="mb-6 flex justify-between rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-muted">
+              <span>
+                Hits: <span className="text-accent">{score.hits}</span>
+              </span>
+              <span>
+                Misses: <span className="text-rose-400">{score.misses}</span>
+              </span>
             </div>
 
-            <div className="relative h-96 bg-border/10 rounded-lg overflow-hidden">
+            <div className="relative h-96 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl shadow-card">
               {/* Target line */}
               <div className="absolute bottom-16 left-0 right-0 h-1 bg-accent z-10" />
 
@@ -228,15 +233,19 @@ function RhythmCaptcha() {
                 {KEYS.map((key) => (
                   <div
                     key={key}
-                    className={`flex-1 border-r border-border last:border-r-0 relative transition-colors ${
-                      pressedKeys.has(key) ? 'bg-accent/20' : ''
+                    className={`flex-1 border-r border-white/10 last:border-r-0 relative transition-colors ${
+                      pressedKeys.has(key) ? "bg-accent/10" : ""
                     }`}
                   >
                     {/* Key label at bottom */}
                     <div className="absolute bottom-4 left-0 right-0 text-center">
-                      <div className={`inline-block px-4 py-2 rounded font-bold text-lg uppercase transition-transform ${
-                        pressedKeys.has(key) ? 'bg-accent text-background scale-110' : 'bg-border text-accent'
-                      }`}>
+                      <div
+                        className={`inline-block rounded-2xl px-4 py-2 font-bold text-lg uppercase transition-transform ${
+                          pressedKeys.has(key)
+                            ? "bg-gradient-to-r from-accent to-accent-bright text-background scale-110 shadow-glow"
+                            : "bg-white/5 text-foreground/80"
+                        }`}
+                      >
                         {key}
                       </div>
                     </div>

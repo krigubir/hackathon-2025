@@ -1,29 +1,30 @@
-import React from 'react';
+import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: "primary" | "secondary" | "danger";
   children: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
+  variant = "primary",
   children,
-  className = '',
+  className = "",
   ...props
 }) => {
-  const baseStyles = 'px-6 py-3 font-medium rounded transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:shadow-lg';
-  
+  const baseStyles =
+    "pill inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-neon/60 disabled:opacity-40 disabled:cursor-not-allowed";
+
   const variantStyles = {
-    primary: 'bg-accent text-background hover:bg-accent-light hover:scale-105 active:scale-95',
-    secondary: 'bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-background hover:scale-105 active:scale-95',
-    danger: 'bg-red-600 text-white hover:bg-red-700 hover:scale-105 active:scale-95',
+    primary:
+      "bg-gradient-to-r from-accent to-accent-bright text-background shadow-glow hover:-translate-y-0.5 hover:shadow-[0_20px_45px_rgba(157,123,255,0.45)] active:translate-y-0",
+    secondary:
+      "border border-border-glow/60 text-foreground/90 bg-background-card/60 hover:text-accent-neon hover:border-accent-neon/80 hover:-translate-y-0.5",
+    danger:
+      "bg-gradient-to-r from-rose-500 to-orange-400 text-white shadow-[0_15px_40px_rgba(249,71,71,0.35)] hover:-translate-y-0.5",
   };
 
   return (
-    <button
-      className={`${baseStyles} ${variantStyles[variant]} ${className}`}
-      {...props}
-    >
+    <button className={`${baseStyles} ${variantStyles[variant]} ${className}`} {...props}>
       {children}
     </button>
   );
