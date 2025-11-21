@@ -20,6 +20,7 @@ const KEYS = ['a', 's', 'd', 'f'];
 const NOTE_SPEED = 2; // seconds to fall
 const PASS_THRESHOLD = 0.7;
 const TIMING_WINDOW = 0.15; // seconds
+const KEY_ZONE_HEIGHT = 120;
 
 function RhythmCaptcha() {
   const navigate = useNavigate();
@@ -225,56 +226,77 @@ function RhythmCaptcha() {
             </div>
 
             <div className="relative h-96 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl shadow-card">
-              {/* Target line */}
-              <div className="absolute bottom-16 left-0 right-0 h-1 bg-accent z-10" />
+              <div className="absolute inset-0">
+                {/* Target line */}
+                <div
+                  className="absolute left-0 right-0 z-20"
+                  style={{ top: `calc(100% - ${KEY_ZONE_HEIGHT}px)` }}
+                >
+                  <div className="h-1 bg-gradient-to-r from-accent to-accent-neon shadow-glow" />
+                </div>
 
-              {/* Lanes */}
-              <div className="absolute inset-0 flex">
-                {KEYS.map((key) => (
-                  <div
-                    key={key}
-                    className={`flex-1 border-r border-white/10 last:border-r-0 relative transition-colors ${
-                      pressedKeys.has(key) ? "bg-accent/10" : ""
-                    }`}
-                  >
-                    {/* Key label at bottom */}
-                    <div className="absolute bottom-4 left-0 right-0 text-center">
+                {/* Falling area */}
+                <div
+                  className="absolute left-0 right-0 top-0"
+                  style={{ bottom: KEY_ZONE_HEIGHT }}
+                >
+                  <div className="flex h-full">
+                    {KEYS.map((key) => (
                       <div
-                        className={`inline-block rounded-2xl px-4 py-2 font-bold text-lg uppercase transition-transform ${
+                        key={key}
+                        className={`relative flex-1 border-r border-white/10 last:border-r-0 transition-colors overflow-hidden ${
+                          pressedKeys.has(key) ? "bg-white/10" : "bg-black/10"
+                        }`}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-black/20 opacity-60" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute inset-0 pointer-events-none">
+                    {getVisibleNotes().map((note) => {
+                      const progress = (currentTime - note.time) / NOTE_SPEED;
+                      const top = progress * 100;
+                      const noteIndex = notes.indexOf(note);
+                      const processed = notesProcessedRef.current.has(noteIndex);
+
+                      return (
+                        <div
+                          key={noteIndex}
+                          className={`absolute w-1/4 transition-opacity duration-150 ${
+                            processed ? "opacity-0" : "opacity-100"
+                          }`}
+                          style={{
+                            left: `${note.lane * 25}%`,
+                            top: `${top}%`,
+                          }}
+                        >
+                          <div className="mx-auto h-16 w-4/5 rounded-full bg-gradient-to-b from-accent-bright to-accent-neon shadow-[0_0_30px_rgba(70,240,255,0.55)]" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Key zone */}
+                <div
+                  className="absolute left-0 right-0 bottom-0 flex items-end"
+                  style={{ height: KEY_ZONE_HEIGHT }}
+                >
+                  {KEYS.map((key) => (
+                    <div key={key} className="flex-1 pb-4 text-center">
+                      <div
+                        className={`inline-block rounded-2xl px-5 py-3 font-bold text-lg uppercase transition-transform ${
                           pressedKeys.has(key)
                             ? "bg-gradient-to-r from-accent to-accent-bright text-background scale-110 shadow-glow"
-                            : "bg-white/5 text-foreground/80"
+                            : "bg-white/5 text-foreground/90"
                         }`}
                       >
                         {key}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-
-              {/* Falling notes */}
-              {getVisibleNotes().map((note) => {
-                const progress = (currentTime - note.time) / NOTE_SPEED;
-                const top = progress * 100;
-                const noteIndex = notes.indexOf(note);
-                const processed = notesProcessedRef.current.has(noteIndex);
-                
-                return (
-                  <div
-                    key={noteIndex}
-                    className={`absolute w-1/4 transition-opacity ${
-                      processed ? 'opacity-0' : 'opacity-100'
-                    }`}
-                    style={{
-                      left: `${note.lane * 25}%`,
-                      top: `${top}%`,
-                    }}
-                  >
-                    <div className="mx-2 h-12 bg-accent rounded shadow-lg" />
-                  </div>
-                );
-              })}
             </div>
           </>
         )}
