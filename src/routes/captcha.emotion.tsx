@@ -71,47 +71,50 @@ function EmotionCaptcha() {
       title="EMOTIONAL RECOGNITION VERIFICATION"
       description="Identify the emotion displayed in the human face. This verifies your capacity for emotional intelligence."
     >
-      <div className="space-y-6">
-        <div className="bg-accent/10 border border-accent/30 rounded p-4 text-center">
-          <p className="text-accent font-semibold">
-            What emotion is this person expressing?
-          </p>
+      <div className="space-y-8">
+        <div className="gradient-border max-w-lg mx-auto">
+          <div className="glass-panel p-6 text-center">
+            <p className="text-xs uppercase tracking-[0.5em] text-accent-neon/70 mb-3">
+              Human Expression Feed
+            </p>
+            <p className="text-accent-bright font-semibold">
+              What emotion is this person expressing?
+            </p>
+          </div>
         </div>
 
         <div className="flex justify-center">
-          <div className="relative w-full max-w-md">
+          <div className="relative w-full max-w-md rounded-3xl border border-white/15 bg-white/5 p-4">
             <img
               src={challenge.imageUrl}
               alt="Face showing emotion"
-              className="w-full rounded-lg border-2 border-border"
+              className="w-full rounded-2xl border border-white/10"
             />
-            <div className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-lg">
-              <div className="text-center p-8">
-                <div className="text-8xl mb-4">😊</div>
-                <p className="text-muted text-sm">
-                  In production: Use actual human face image
-                </p>
+            <div className="absolute inset-4 flex items-center justify-center rounded-2xl bg-background/80 backdrop-blur-xl">
+              <div className="text-center p-6">
+                <div className="text-8xl mb-3">😊</div>
+                <p className="text-muted text-sm">In production: Use actual human face image</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
           {EMOTIONS.map((emotion) => (
             <button
               key={emotion}
               onClick={() => setSelectedEmotion(emotion)}
-              className={`py-4 px-6 rounded-lg border-2 transition-all text-left ${
+              className={`rounded-2xl border px-6 py-4 text-left transition-all ${
                 selectedEmotion === emotion
-                  ? 'border-accent bg-accent/20 text-accent scale-95'
-                  : 'border-border hover:border-accent/50 text-foreground'
+                  ? "border-accent-neon bg-accent-neon/10 text-accent-neon shadow-glow"
+                  : "border-white/15 bg-white/5 text-foreground/80 hover:border-accent-bright/60"
               }`}
             >
               <div className="text-2xl mb-1">
-                {EMOTION_LABELS[emotion].split(' ')[0]}
+                {EMOTION_LABELS[emotion].split(" ")[0]}
               </div>
               <div className="text-sm font-medium">
-                {EMOTION_LABELS[emotion].split(' ')[1]}
+                {EMOTION_LABELS[emotion].split(" ")[1]}
               </div>
             </button>
           ))}
@@ -126,7 +129,7 @@ function EmotionCaptcha() {
           </Button>
         </div>
 
-        <div className="bg-border/30 rounded p-4">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
           <p className="text-muted text-xs text-center">
             💡 This test validates your ability to recognize and interpret human emotions,
             a distinctly human capability that AI systems cannot authentically replicate.

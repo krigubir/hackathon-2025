@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface CaptchaContainerProps {
   title: string;
@@ -12,17 +12,24 @@ export const CaptchaContainer: React.FC<CaptchaContainerProps> = ({
   children,
 }) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 animate-fade-in">
-      <div className="w-full max-w-4xl">
-        <div className="text-center mb-8 animate-slide-up">
-          <h1 className="text-3xl font-bold text-foreground mb-3 tracking-tight">{title}</h1>
-          <p className="text-muted text-lg">{description}</p>
-        </div>
-        <div className="bg-background border border-border rounded-lg p-8 shadow-2xl transition-all hover:border-accent/30">
-          {children}
+    <section className="relative min-h-screen overflow-hidden px-6 py-16">
+      <div className="absolute inset-0 bg-hero-glow opacity-60 blur-3xl pointer-events-none" />
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-center">
+        <div className="gradient-border w-full animate-fade-in">
+          <div className="glass-panel relative z-10 p-10">
+            <div className="grid-lines" />
+            <div className="relative z-10 text-center mb-12 animate-slide-up">
+              <p className="text-xs tracking-[0.6em] text-accent-neon/80 uppercase mb-4">
+                HUMAN VERIFICATION
+              </p>
+              <h1 className="text-4xl md:text-5xl font-bold heading-glow mb-4">{title}</h1>
+              <p className="text-muted text-base md:text-lg max-w-3xl mx-auto">{description}</p>
+            </div>
+            <div className="relative z-10">{children}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

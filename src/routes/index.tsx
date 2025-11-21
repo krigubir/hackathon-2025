@@ -1,8 +1,8 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Button } from '../components/Button';
-import { useApp } from '../contexts/AppContext';
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Button } from "../components/Button";
+import { useApp } from "../contexts/AppContext";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: LandingPage,
 });
 
@@ -12,47 +12,86 @@ function LandingPage() {
 
   const handleBegin = () => {
     resetProgress();
-    navigate({ to: '/captcha/rhythm' });
+    navigate({ to: "/captcha/rhythm" });
+  };
+
+  const scrollToProtocol = () => {
+    const element = document.getElementById("protocol-card");
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6">
-      <div className="max-w-3xl text-center">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-6xl font-bold text-foreground mb-4 tracking-tight animate-slide-up">
-            HUMAN VERIFICATION SYSTEM
-          </h1>
-          <div className="h-1 w-32 bg-accent mx-auto mb-8 animate-pulse" />
-          <p className="text-xl text-muted leading-relaxed mb-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            In an era of advanced artificial intelligence, verification of human identity
-            has become a critical necessity.
-          </p>
-          <p className="text-lg text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            You will now undergo a series of <span className="text-accent font-semibold">six verification challenges</span> designed
-            to confirm your biological humanity through cognitive and emotional responses
-            that AI systems cannot replicate.
-          </p>
-        </div>
+    <section className="relative min-h-screen overflow-hidden px-6 py-24">
+      <div className="absolute inset-0 bg-hero-glow opacity-70 blur-3xl pointer-events-none" />
+      <div className="mx-auto flex max-w-6xl flex-col gap-16">
+        <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr] items-center">
+          <div className="space-y-8 animate-slide-up">
+            <div className="text-xs uppercase tracking-[0.6em] text-accent-neon/70">
+              Protocol // V-7.2
+            </div>
+            <h1 className="text-5xl sm:text-6xl font-bold leading-tight heading-glow">
+              Human Verification Standard for Future Shock Societies
+            </h1>
+            <p className="text-lg text-muted leading-relaxed">
+              Civilization now requires irrefutable proof of humanity. Complete a gauntlet of
+              high-fidelity cognition, coordination, and empathy challenges crafted to expose even
+              the most advanced AI imposters.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Button onClick={handleBegin}>Begin Verification</Button>
+              <Button variant="secondary" type="button" onClick={scrollToProtocol}>
+                View Protocol Brief
+              </Button>
+            </div>
+            <div className="flex flex-wrap gap-8 text-sm text-muted">
+              <div>
+                <p className="text-3xl font-bold text-accent-bright">6</p>
+                <p>Adaptive Challenges</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-accent-neon">&lt; 12m</p>
+                <p>Average Completion</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-accent-bright">99.7%</p>
+                <p>AI Detection Accuracy</p>
+              </div>
+            </div>
+          </div>
 
-        <div className="bg-border/30 border border-border rounded-lg p-6 mb-10 animate-slide-up transition-all hover:border-accent/50" style={{ animationDelay: '0.3s' }}>
-          <p className="text-sm text-muted uppercase tracking-wide mb-2">System Notice</p>
-          <p className="text-foreground">
-            Failure to complete verification may result in restricted access to services.
-            All attempts are monitored and recorded for security purposes.
-          </p>
+          <div
+            id="protocol-card"
+            className="gradient-border animate-fade-in"
+            style={{ animationDelay: "0.15s" }}
+          >
+            <div className="glass-panel relative p-8">
+              <div className="grid-lines" />
+              <div className="relative z-10 space-y-6">
+                <p className="text-sm uppercase tracking-[0.4em] text-accent-neon/70">System Notice</p>
+                <p className="text-foreground/90 leading-relaxed">
+                  Verification is mandatory for access to core infrastructure. All attempts are logged,
+                  analyzed, and cross-referenced with global identity registries.
+                </p>
+                <div className="border border-border-glow/50 rounded-2xl p-5">
+                  <div className="text-xs text-muted uppercase tracking-[0.5em] mb-3">Sequence</div>
+                  <ul className="space-y-2 text-sm text-foreground/80">
+                    <li>01. Rhythm Cognition</li>
+                    <li>02. Extreme Counting</li>
+                    <li>03. Micro-object Detection</li>
+                    <li>04. Precision Motor Control</li>
+                    <li>05. Reaction Integrity</li>
+                    <li>06. Emotion Recognition</li>
+                  </ul>
+                </div>
+                <p className="text-xs text-muted">
+                  Protocol Version 7.2.4 • Compliance Level: Mandated by the Global Human Registry Council
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <Button onClick={handleBegin} className="text-lg px-10 py-4">
-            BEGIN VERIFICATION
-          </Button>
-        </div>
-
-        <p className="text-xs text-muted mt-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-          Protocol Version 3.7.2 | Compliance Level: MANDATORY
-        </p>
       </div>
-    </div>
+    </section>
   );
 }
 

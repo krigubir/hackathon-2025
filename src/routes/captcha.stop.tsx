@@ -123,26 +123,22 @@ function StopCaptcha() {
     >
       <div className="space-y-8">
         {!isActive && stoppedPosition === null ? (
-          <div className="text-center py-8">
-            <div className="mb-8">
-              <p className="text-muted mb-4">
-                A bar will move rapidly across the screen. You must stop it precisely within the target zone.
-              </p>
-              <p className="text-accent font-semibold mb-2">Press SPACEBAR to stop</p>
-              <p className="text-muted text-sm">
-                This tests human reaction time and precision that AI systems struggle to replicate naturally.
-              </p>
-            </div>
-            <Button onClick={startTest}>
-              {attempts > 0 ? 'Try Again' : 'Start Test'}
-            </Button>
+          <div className="text-center py-10 space-y-5">
+            <p className="text-muted">
+              A luminous bar will sweep at unpredictable speeds. Arrest it inside the narrow target to
+              prove human-grade reaction latency.
+            </p>
+            <p className="text-accent-neon font-semibold">Press SPACEBAR to stop</p>
+            <Button onClick={startTest}>{attempts > 0 ? "Try Again" : "Start Test"}</Button>
           </div>
         ) : (
           <>
-            <div className="bg-border/20 rounded-lg p-4 text-center">
-              <p className="text-muted text-sm mb-2">Attempts: <span className="text-accent">{attempts}</span></p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+              <p className="text-muted text-sm mb-2">
+                Attempts: <span className="text-accent-bright">{attempts}</span>
+              </p>
               {isActive && (
-                <p className="text-accent font-bold text-lg animate-pulse">
+                <p className="text-accent-neon font-bold text-lg animate-pulse">
                   Press SPACEBAR to stop!
                 </p>
               )}
@@ -150,26 +146,28 @@ function StopCaptcha() {
 
             <div className="max-w-3xl mx-auto">
               <div
-                className="relative bg-border/20 rounded-lg"
-                style={{ height: '120px' }}
+                className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+                style={{ height: "120px" }}
               >
                 {/* Target zone */}
                 <div
-                  className="absolute top-0 bottom-0 bg-accent/20 border-2 border-accent"
+                  className="absolute top-0 bottom-0 bg-accent-neon/10 border-2 border-accent-neon"
                   style={{
                     left: `${TARGET_POSITION}px`,
                     width: `${TARGET_SIZE}px`,
                   }}
                 >
                   <div className="h-full flex items-center justify-center">
-                    <span className="text-accent font-bold text-sm">TARGET</span>
+                    <span className="text-accent-neon font-bold text-xs tracking-[0.4em]">
+                      TARGET
+                    </span>
                   </div>
                 </div>
 
                 {/* Moving bar */}
                 <div
-                  className={`absolute top-1/2 -translate-y-1/2 h-24 w-5 rounded transition-colors ${
-                    isActive ? 'bg-accent' : stoppedPosition !== null ? 'bg-foreground' : 'bg-accent'
+                  className={`absolute top-1/2 -translate-y-1/2 h-24 w-5 rounded-full transition-colors ${
+                    isActive ? "bg-gradient-to-b from-accent to-accent-neon" : stoppedPosition !== null ? "bg-foreground" : "bg-accent"
                   }`}
                   style={{
                     left: `${stoppedPosition !== null ? stoppedPosition : position}px`,
@@ -178,7 +176,7 @@ function StopCaptcha() {
 
                 {/* Center line indicator */}
                 <div
-                  className="absolute top-0 bottom-0 w-px bg-accent-light opacity-50"
+                  className="absolute top-0 bottom-0 w-px bg-accent-neon/60"
                   style={{ left: `${TARGET_POSITION + TARGET_SIZE / 2}px` }}
                 />
               </div>
@@ -186,7 +184,7 @@ function StopCaptcha() {
               {stoppedPosition !== null && !showResult && (
                 <div className="mt-4 text-center animate-fade-in">
                   <p className="text-foreground text-lg mb-2">
-                    Accuracy: <span className="text-accent font-bold">{getAccuracy().toFixed(1)}%</span>
+                    Accuracy: <span className="text-accent-bright font-bold">{getAccuracy().toFixed(1)}%</span>
                   </p>
                   <Button onClick={startTest} variant="secondary">
                     Try Again
@@ -195,7 +193,7 @@ function StopCaptcha() {
               )}
             </div>
 
-            <div className="bg-border/30 rounded p-3 text-center">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
               <p className="text-muted text-xs">
                 💡 Focus on the target zone. React quickly when the bar approaches.
               </p>

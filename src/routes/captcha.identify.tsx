@@ -93,28 +93,33 @@ function IdentifyCaptcha() {
       title="OBJECT IDENTIFICATION VERIFICATION"
       description="Select all squares containing a bicycle. Look carefully - some objects may be extremely small."
     >
-      <div className="space-y-6">
-        <div className="bg-accent/10 border border-accent/30 rounded p-4">
-          <p className="text-accent font-semibold text-center">
-            SELECT ALL SQUARES WITH: <span className="text-xl">🚲 BICYCLE</span>
-          </p>
+      <div className="space-y-8">
+        <div className="gradient-border max-w-xl mx-auto">
+          <div className="glass-panel p-6 text-center">
+            <p className="text-xs uppercase tracking-[0.4em] text-accent-neon/70 mb-4">
+              Visual Target
+            </p>
+            <p className="text-accent-bright font-semibold">
+              SELECT ALL SQUARES WITH: <span className="text-xl">🚲 BICYCLE</span>
+            </p>
+          </div>
         </div>
 
         {showHint && (
-          <div className="bg-border/30 border border-muted rounded p-3 text-sm text-muted animate-fade-in">
+          <div className="rounded-2xl border border-white/15 bg-white/5 p-4 text-sm text-muted animate-fade-in">
             💡 Hint: Look at the corners and edges of each image. Some bicycles are very small.
           </div>
         )}
 
-        <div className="grid grid-cols-4 gap-2 max-w-2xl mx-auto">
+        <div className="grid grid-cols-4 gap-3 max-w-2xl mx-auto">
           {grid.map((cell) => (
             <button
               key={cell.id}
               onClick={() => toggleCell(cell.id)}
-              className={`aspect-square relative overflow-hidden rounded border-2 transition-all ${
+              className={`aspect-square relative overflow-hidden rounded-2xl border transition-all ${
                 selected.has(cell.id)
-                  ? 'border-accent scale-95'
-                  : 'border-border hover:border-accent/50'
+                  ? "border-accent-neon bg-accent-neon/10 scale-95 shadow-glow"
+                  : "border-white/15 bg-white/5 hover:border-accent-bright/60"
               }`}
             >
               <img
@@ -129,19 +134,19 @@ function IdentifyCaptcha() {
                 </div>
               )}
               {selected.has(cell.id) && (
-                <div className="absolute inset-0 bg-accent/30 flex items-center justify-center">
-                  <div className="text-4xl text-accent">✓</div>
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/40 to-accent-neon/30 flex items-center justify-center">
+                  <div className="text-4xl text-accent-bright">✓</div>
                 </div>
               )}
             </button>
           ))}
         </div>
 
-        <div className="flex justify-between items-center pt-4">
+        <div className="flex flex-col gap-4 items-center md:flex-row md:justify-between pt-4">
           <div className="text-sm text-muted">
-            {selected.size} square{selected.size !== 1 ? 's' : ''} selected
+            {selected.size} square{selected.size !== 1 ? "s" : ""} selected
           </div>
-          <div className="space-x-3">
+          <div className="flex gap-3">
             <Button variant="secondary" onClick={() => setSelected(new Set())}>
               Clear Selection
             </Button>
