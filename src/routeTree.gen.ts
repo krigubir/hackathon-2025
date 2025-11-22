@@ -13,7 +13,6 @@ import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaptchaStopRouteImport } from './routes/captcha.stop'
 import { Route as CaptchaRhythmRouteImport } from './routes/captcha.rhythm'
-import { Route as CaptchaIdentifyRouteImport } from './routes/captcha.identify'
 import { Route as CaptchaGolfRouteImport } from './routes/captcha.golf'
 import { Route as CaptchaEmotionRouteImport } from './routes/captcha.emotion'
 import { Route as CaptchaCounterRouteImport } from './routes/captcha.counter'
@@ -38,11 +37,6 @@ const CaptchaRhythmRoute = CaptchaRhythmRouteImport.update({
   path: '/captcha/rhythm',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaptchaIdentifyRoute = CaptchaIdentifyRouteImport.update({
-  id: '/captcha/identify',
-  path: '/captcha/identify',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CaptchaGolfRoute = CaptchaGolfRouteImport.update({
   id: '/captcha/golf',
   path: '/captcha/golf',
@@ -65,7 +59,6 @@ export interface FileRoutesByFullPath {
   '/captcha/counter': typeof CaptchaCounterRoute
   '/captcha/emotion': typeof CaptchaEmotionRoute
   '/captcha/golf': typeof CaptchaGolfRoute
-  '/captcha/identify': typeof CaptchaIdentifyRoute
   '/captcha/rhythm': typeof CaptchaRhythmRoute
   '/captcha/stop': typeof CaptchaStopRoute
 }
@@ -75,7 +68,6 @@ export interface FileRoutesByTo {
   '/captcha/counter': typeof CaptchaCounterRoute
   '/captcha/emotion': typeof CaptchaEmotionRoute
   '/captcha/golf': typeof CaptchaGolfRoute
-  '/captcha/identify': typeof CaptchaIdentifyRoute
   '/captcha/rhythm': typeof CaptchaRhythmRoute
   '/captcha/stop': typeof CaptchaStopRoute
 }
@@ -86,7 +78,6 @@ export interface FileRoutesById {
   '/captcha/counter': typeof CaptchaCounterRoute
   '/captcha/emotion': typeof CaptchaEmotionRoute
   '/captcha/golf': typeof CaptchaGolfRoute
-  '/captcha/identify': typeof CaptchaIdentifyRoute
   '/captcha/rhythm': typeof CaptchaRhythmRoute
   '/captcha/stop': typeof CaptchaStopRoute
 }
@@ -98,7 +89,6 @@ export interface FileRouteTypes {
     | '/captcha/counter'
     | '/captcha/emotion'
     | '/captcha/golf'
-    | '/captcha/identify'
     | '/captcha/rhythm'
     | '/captcha/stop'
   fileRoutesByTo: FileRoutesByTo
@@ -108,7 +98,6 @@ export interface FileRouteTypes {
     | '/captcha/counter'
     | '/captcha/emotion'
     | '/captcha/golf'
-    | '/captcha/identify'
     | '/captcha/rhythm'
     | '/captcha/stop'
   id:
@@ -118,7 +107,6 @@ export interface FileRouteTypes {
     | '/captcha/counter'
     | '/captcha/emotion'
     | '/captcha/golf'
-    | '/captcha/identify'
     | '/captcha/rhythm'
     | '/captcha/stop'
   fileRoutesById: FileRoutesById
@@ -129,7 +117,6 @@ export interface RootRouteChildren {
   CaptchaCounterRoute: typeof CaptchaCounterRoute
   CaptchaEmotionRoute: typeof CaptchaEmotionRoute
   CaptchaGolfRoute: typeof CaptchaGolfRoute
-  CaptchaIdentifyRoute: typeof CaptchaIdentifyRoute
   CaptchaRhythmRoute: typeof CaptchaRhythmRoute
   CaptchaStopRoute: typeof CaptchaStopRoute
 }
@@ -164,13 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaptchaRhythmRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/captcha/identify': {
-      id: '/captcha/identify'
-      path: '/captcha/identify'
-      fullPath: '/captcha/identify'
-      preLoaderRoute: typeof CaptchaIdentifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/captcha/golf': {
       id: '/captcha/golf'
       path: '/captcha/golf'
@@ -201,7 +181,6 @@ const rootRouteChildren: RootRouteChildren = {
   CaptchaCounterRoute: CaptchaCounterRoute,
   CaptchaEmotionRoute: CaptchaEmotionRoute,
   CaptchaGolfRoute: CaptchaGolfRoute,
-  CaptchaIdentifyRoute: CaptchaIdentifyRoute,
   CaptchaRhythmRoute: CaptchaRhythmRoute,
   CaptchaStopRoute: CaptchaStopRoute,
 }
