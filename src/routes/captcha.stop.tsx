@@ -105,7 +105,7 @@ function StopCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: "/captcha/identify" });
+    navigate({ to: "/captcha/emotion" });
   };
 
   const getAccuracy = () => {
