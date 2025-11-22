@@ -543,7 +543,7 @@ function RhythmCaptcha() {
             setShowResult(false);
             startChallenge();
           }}
-          onContinue={() => navigate({ to: "/captcha/counter" })}
+          onContinue={() => navigate({ to: "/captcha/golf" })}
           message={
             passed
               ? `Verification cleared with ${hits} confirmed hits.`

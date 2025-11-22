@@ -81,7 +81,7 @@ function EmotionCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: "/captcha/golf" });
+    navigate({ to: "/captcha/rhythm" });
   };
 
   return (
