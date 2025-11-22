@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState, useEffect, useRef } from 'react';
-import { CaptchaContainer } from '../components/CaptchaContainer';
-import { Button } from '../components/Button';
-import { ResultScreen } from '../components/ResultScreen';
-import { useApp } from '../contexts/AppContext';
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
+import { CaptchaContainer } from "../components/CaptchaContainer";
+import { Button } from "../components/Button";
+import { ResultScreen } from "../components/ResultScreen";
+import { useApp } from "../contexts/AppContext";
 
-export const Route = createFileRoute('/captcha/stop')({
+export const Route = createFileRoute("/captcha/stop")({
   component: StopCaptcha,
 });
 
@@ -18,7 +18,7 @@ const TOLERANCE = 30; // pixels
 function StopCaptcha() {
   const navigate = useNavigate();
   const { markCaptchaComplete, incrementAttempts } = useApp();
-  
+
   const [isActive, setIsActive] = useState(false);
   const [position, setPosition] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -26,7 +26,7 @@ function StopCaptcha() {
   const [passed, setPassed] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [stoppedPosition, setStoppedPosition] = useState<number | null>(null);
-  
+
   const animationRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -61,14 +61,14 @@ function StopCaptcha() {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.code === 'Space' && isActive) {
+      if (e.code === "Space" && isActive) {
         e.preventDefault();
         handleStop();
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive, position]);
 
@@ -83,19 +83,19 @@ function StopCaptcha() {
   const handleStop = () => {
     setIsActive(false);
     setStoppedPosition(position);
-    
+
     const targetCenter = TARGET_POSITION + TARGET_SIZE / 2;
     const barCenter = position + 10;
     const distance = Math.abs(barCenter - targetCenter);
-    
+
     const success = distance <= TOLERANCE;
     setPassed(success);
     setShowResult(true);
-    
+
     if (success) {
-      markCaptchaComplete('stop', true, 100 - distance);
+      markCaptchaComplete("stop", true, 100 - distance);
     } else {
-      incrementAttempts('stop');
+      incrementAttempts("stop");
     }
   };
 
@@ -105,7 +105,7 @@ function StopCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: '/captcha/emotion' });
+    navigate({ to: "/captcha/emotion" });
   };
 
   const getAccuracy = () => {
@@ -125,11 +125,15 @@ function StopCaptcha() {
         {!isActive && stoppedPosition === null ? (
           <div className="text-center py-10 space-y-5">
             <p className="text-muted">
-              A luminous bar will sweep at unpredictable speeds. Arrest it inside the narrow target to
-              prove human-grade reaction latency.
+              A luminous bar will sweep at unpredictable speeds. Arrest it
+              inside the narrow target to prove human-grade reaction latency.
             </p>
-            <p className="text-accent-neon font-semibold">Press SPACEBAR to stop</p>
-            <Button onClick={startTest}>{attempts > 0 ? "Try Again" : "Start Test"}</Button>
+            <p className="text-accent-neon font-semibold">
+              Press SPACEBAR to stop
+            </p>
+            <Button onClick={startTest}>
+              {attempts > 0 ? "Try Again" : "Start Test"}
+            </Button>
           </div>
         ) : (
           <>
@@ -147,7 +151,11 @@ function StopCaptcha() {
             <div className="max-w-3xl mx-auto">
               <div
                 className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5"
-                style={{ height: "120px" }}
+                style={{
+                  height: "120px",
+                  width: `${BAR_WIDTH}px`,
+                  margin: "0 auto",
+                }}
               >
                 {/* Target zone */}
                 <div
@@ -166,13 +174,21 @@ function StopCaptcha() {
 
                 {/* Moving bar */}
                 <div
-                  className={`absolute top-1/2 -translate-y-1/2 h-24 w-5 rounded-full transition-colors ${
-                    isActive ? "bg-gradient-to-b from-accent to-accent-neon" : stoppedPosition !== null ? "bg-foreground" : "bg-accent"
-                  }`}
+                  className="absolute top-1/2 -translate-y-1/2 h-24 w-5 rounded-full border border-white/20 transition-transform duration-100"
                   style={{
                     left: `${stoppedPosition !== null ? stoppedPosition : position}px`,
+                    background: isActive
+                      ? "linear-gradient(180deg, #9d7bff 0%, #46f0ff 100%)"
+                      : stoppedPosition !== null
+                        ? "rgba(246, 247, 251, 0.9)"
+                        : "rgba(157, 123, 255, 0.85)",
+                    boxShadow: isActive
+                      ? "0 0 25px rgba(70, 240, 255, 0.65)"
+                      : "0 0 15px rgba(157, 123, 255, 0.35)",
                   }}
-                />
+                >
+                  <div className="absolute inset-0 opacity-40 blur-xl bg-accent-neon"></div>
+                </div>
 
                 {/* Center line indicator */}
                 <div
@@ -184,7 +200,10 @@ function StopCaptcha() {
               {stoppedPosition !== null && !showResult && (
                 <div className="mt-4 text-center animate-fade-in">
                   <p className="text-foreground text-lg mb-2">
-                    Accuracy: <span className="text-accent-bright font-bold">{getAccuracy().toFixed(1)}%</span>
+                    Accuracy:{" "}
+                    <span className="text-accent-bright font-bold">
+                      {getAccuracy().toFixed(1)}%
+                    </span>
                   </p>
                   <Button onClick={startTest} variant="secondary">
                     Try Again
@@ -195,7 +214,8 @@ function StopCaptcha() {
 
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
               <p className="text-muted text-xs">
-                💡 Focus on the target zone. React quickly when the bar approaches.
+                💡 Focus on the target zone. React quickly when the bar
+                approaches.
               </p>
             </div>
           </>
@@ -217,4 +237,3 @@ function StopCaptcha() {
     </CaptchaContainer>
   );
 }
-

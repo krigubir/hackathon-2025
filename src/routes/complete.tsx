@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Button } from "../components/Button";
 import { useApp } from "../contexts/AppContext";
-import { useEffect } from "react";
 
 export const Route = createFileRoute("/complete")({
   component: CompletePage,
@@ -10,12 +9,6 @@ export const Route = createFileRoute("/complete")({
 function CompletePage() {
   const navigate = useNavigate();
   const { state, resetProgress } = useApp();
-
-  useEffect(() => {
-    if (state.completedCaptchas.length < 6) {
-      navigate({ to: "/" });
-    }
-  }, [state.completedCaptchas.length, navigate]);
 
   const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
   const minutes = Math.floor(timeElapsed / 60);
@@ -37,45 +30,64 @@ function CompletePage() {
           <p className="text-xs uppercase tracking-[0.6em] text-accent-neon/70">
             Status // Verified
           </p>
-          <h1 className="text-5xl font-bold heading-glow">Human Identity Confirmed</h1>
+          <h1 className="text-5xl font-bold heading-glow">
+            Human Identity Confirmed
+          </h1>
           <p className="text-lg text-muted">
-            Biometric heuristics, emotional analysis, and cognition telemetry meet all criteria. You
-            are now cleared for full-spectrum system access.
+            Biometric heuristics, emotional analysis, and cognition telemetry
+            meet all criteria. You are now cleared for full-spectrum system
+            access.
           </p>
         </div>
 
-        <div className="gradient-border animate-slide-up" style={{ animationDelay: "0.15s" }}>
+        <div
+          className="gradient-border animate-slide-up"
+          style={{ animationDelay: "0.15s" }}
+        >
           <div className="glass-panel relative p-10">
             <div className="grid-lines" />
             <div className="relative z-10 grid gap-8 md:grid-cols-2 text-left">
               <div>
-                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">Verification Time</p>
+                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">
+                  Verification Time
+                </p>
                 <p className="text-4xl font-semibold text-accent-bright tabular-nums">
                   {minutes}:{seconds.toString().padStart(2, "0")}
                 </p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">Challenges Passed</p>
+                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">
+                  Challenges Passed
+                </p>
                 <p className="text-4xl font-semibold text-accent-neon">6 / 6</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">Session Token</p>
+                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">
+                  Session Token
+                </p>
                 <p className="font-mono text-xl text-foreground/90">
                   {state.startTime.toString(36).toUpperCase()}
                 </p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">Access Level</p>
-                <p className="text-2xl font-semibold text-accent-bright">Tier IV • Granted</p>
+                <p className="text-xs uppercase tracking-[0.5em] text-muted mb-3">
+                  Access Level
+                </p>
+                <p className="text-2xl font-semibold text-accent-bright">
+                  Tier IV • Granted
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="space-y-4 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+        <div
+          className="space-y-4 animate-slide-up"
+          style={{ animationDelay: "0.3s" }}
+        >
           <p className="text-muted text-sm">
-            A cryptographic attestation has been stored in the Global Human Registry. Your clearance
-            remains valid for the next 24 hours.
+            A cryptographic attestation has been stored in the Global Human
+            Registry. Your clearance remains valid for the next 24 hours.
           </p>
           <Button onClick={handleRestart} variant="secondary">
             Initiate New Verification
@@ -85,4 +97,3 @@ function CompletePage() {
     </section>
   );
 }
-
