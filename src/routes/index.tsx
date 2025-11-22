@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+
 import { Button } from "../components/Button";
 import { useApp } from "../contexts/AppContext";
+import EunoiaLogo from "../assets/Eunoia.svg";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -12,84 +14,51 @@ function LandingPage() {
 
   const handleBegin = () => {
     resetProgress();
-    navigate({ to: "/captcha/stop" });
+    navigate({ to: "/captcha/ethos" });
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden px-6 py-24">
-      <div className="absolute inset-0 bg-hero-glow opacity-70 blur-3xl pointer-events-none" />
-      <div className="mx-auto flex max-w-6xl flex-col gap-16">
-        <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr] items-center">
-          <div className="space-y-8 animate-slide-up">
-            <div className="text-xs uppercase tracking-[0.6em] text-accent-neon/70">
-              Protocol // V-7.2
-            </div>
-            <h1 className="text-5xl sm:text-6xl font-bold leading-tight heading-glow">
-              The 2025 standard for human verification
-            </h1>
-            <p className="text-lg text-muted leading-relaxed">
-              Civilization now requires irrefutable proof of humanity. Complete
-              a gauntlet of high-fidelity cognition, coordination, and empathy
-              challenges crafted to expose even the most advanced AI imposters.
-            </p>
-            <div className="flex flex-wrap gap-4 ">
-              <Button variant="danger" onClick={handleBegin}>
-                Begin Verification
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-8 text-sm text-muted">
-              <div>
-                <p className="text-3xl font-bold text-accent-bright">6</p>
-                <p>Adaptive Challenges</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-accent-neon">&lt; 12m</p>
-                <p>Average Completion</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-accent-bright">99.7%</p>
-                <p>AI Detection Accuracy</p>
-              </div>
-            </div>
+    <div className="space-y-6 text-slate-100">
+      <div className="rounded-[32px] border border-white/20 bg-[#060b1e]/95 p-10 shadow-[0_40px_130px_rgba(1,3,12,0.65)] backdrop-blur-3xl">
+        <div className="flex items-center gap-4">
+          <img
+            src={EunoiaLogo}
+            alt="Eunoia"
+            className="w-32 drop-shadow-[0_10px_40px_rgba(93,137,255,0.35)]"
+          />
+          <span className="text-xs uppercase tracking-[0.45em] text-slate-400">
+            Access Panel
+          </span>
+        </div>
+        <div className="mt-12 space-y-4">
+          <h1 className="text-3xl font-semibold text-white">
+            Verify the human in you
+          </h1>
+          <p className="text-slate-300 max-w-2xl">
+            This moment is about shared trust. Your identity confirmation is
+            essential to proceed. It protects our collective security and data.
+          </p>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-4">
+          <Button variant="danger" onClick={handleBegin}>
+            Begin Ethos Sequence
+          </Button>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3 text-sm text-slate-300">
+          <div>
+            <p className="font-semibold text-white">1. Initiate</p>
+            <p>We launch the Ethos captcha from within this safe shell.</p>
           </div>
-
-          <div
-            id="protocol-card"
-            className="gradient-border animate-fade-in"
-            style={{ animationDelay: "0.15s" }}
-          >
-            <div className="glass-panel relative p-8">
-              <div className="grid-lines" />
-              <div className="relative z-10 space-y-6">
-                <p className="text-sm uppercase tracking-[0.4em] text-accent-neon/70">
-                  Ethos notice:
-                </p>
-                <p className="text-foreground/90 leading-relaxed">
-                  This moment is about shared trust. Your identity confirmation
-                  is essential to proceed. It protects our collective security
-                  and data. Thank you for maintaining this collaboration
-                </p>
-                <div className="border border-border-glow/50 rounded-2xl p-5">
-                  <div className="text-xs text-muted uppercase tracking-[0.5em] mb-3">
-                    Sequence
-                  </div>
-                  <ul className="space-y-2 text-sm text-foreground/80">
-                    <li>01. Extreme Counting</li>
-                    <li>02. Micro-object Detection</li>
-                    <li>03. Precision Motor Control</li>
-                    <li>04. Reaction Integrity</li>
-                    <li>05. Emotion Recognition</li>
-                  </ul>
-                </div>
-                <p className="text-xs text-muted">
-                  Protocol Version 7.2.4 • Compliance Level: Mandated by the
-                  Global Human Registry Council
-                </p>
-              </div>
-            </div>
+          <div>
+            <p className="font-semibold text-white">2. Confirm</p>
+            <p>Complete the rhythm, timing, and empathy sequences.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">3. Return</p>
+            <p>Eunoia refreshes and lets you into the AI-free commons.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

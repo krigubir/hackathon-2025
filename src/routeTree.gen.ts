@@ -10,16 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as CompleteRouteImport } from './routes/complete'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaptchaStopRouteImport } from './routes/captcha.stop'
 import { Route as CaptchaRhythmRouteImport } from './routes/captcha.rhythm'
 import { Route as CaptchaGolfRouteImport } from './routes/captcha.golf'
+import { Route as CaptchaEthosRouteImport } from './routes/captcha.ethos'
 import { Route as CaptchaEmotionRouteImport } from './routes/captcha.emotion'
 import { Route as CaptchaCounterRouteImport } from './routes/captcha.counter'
 
 const CompleteRoute = CompleteRouteImport.update({
   id: '/complete',
   path: '/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -42,6 +49,11 @@ const CaptchaGolfRoute = CaptchaGolfRouteImport.update({
   path: '/captcha/golf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaptchaEthosRoute = CaptchaEthosRouteImport.update({
+  id: '/captcha/ethos',
+  path: '/captcha/ethos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaptchaEmotionRoute = CaptchaEmotionRouteImport.update({
   id: '/captcha/emotion',
   path: '/captcha/emotion',
@@ -55,18 +67,22 @@ const CaptchaCounterRoute = CaptchaCounterRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/complete': typeof CompleteRoute
   '/captcha/counter': typeof CaptchaCounterRoute
   '/captcha/emotion': typeof CaptchaEmotionRoute
+  '/captcha/ethos': typeof CaptchaEthosRoute
   '/captcha/golf': typeof CaptchaGolfRoute
   '/captcha/rhythm': typeof CaptchaRhythmRoute
   '/captcha/stop': typeof CaptchaStopRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/complete': typeof CompleteRoute
   '/captcha/counter': typeof CaptchaCounterRoute
   '/captcha/emotion': typeof CaptchaEmotionRoute
+  '/captcha/ethos': typeof CaptchaEthosRoute
   '/captcha/golf': typeof CaptchaGolfRoute
   '/captcha/rhythm': typeof CaptchaRhythmRoute
   '/captcha/stop': typeof CaptchaStopRoute
@@ -74,9 +90,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/complete': typeof CompleteRoute
   '/captcha/counter': typeof CaptchaCounterRoute
   '/captcha/emotion': typeof CaptchaEmotionRoute
+  '/captcha/ethos': typeof CaptchaEthosRoute
   '/captcha/golf': typeof CaptchaGolfRoute
   '/captcha/rhythm': typeof CaptchaRhythmRoute
   '/captcha/stop': typeof CaptchaStopRoute
@@ -85,27 +103,33 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
     | '/complete'
     | '/captcha/counter'
     | '/captcha/emotion'
+    | '/captcha/ethos'
     | '/captcha/golf'
     | '/captcha/rhythm'
     | '/captcha/stop'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app'
     | '/complete'
     | '/captcha/counter'
     | '/captcha/emotion'
+    | '/captcha/ethos'
     | '/captcha/golf'
     | '/captcha/rhythm'
     | '/captcha/stop'
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/complete'
     | '/captcha/counter'
     | '/captcha/emotion'
+    | '/captcha/ethos'
     | '/captcha/golf'
     | '/captcha/rhythm'
     | '/captcha/stop'
@@ -113,9 +137,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRoute
   CompleteRoute: typeof CompleteRoute
   CaptchaCounterRoute: typeof CaptchaCounterRoute
   CaptchaEmotionRoute: typeof CaptchaEmotionRoute
+  CaptchaEthosRoute: typeof CaptchaEthosRoute
   CaptchaGolfRoute: typeof CaptchaGolfRoute
   CaptchaRhythmRoute: typeof CaptchaRhythmRoute
   CaptchaStopRoute: typeof CaptchaStopRoute
@@ -128,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/complete'
       fullPath: '/complete'
       preLoaderRoute: typeof CompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -158,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaptchaGolfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/captcha/ethos': {
+      id: '/captcha/ethos'
+      path: '/captcha/ethos'
+      fullPath: '/captcha/ethos'
+      preLoaderRoute: typeof CaptchaEthosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/captcha/emotion': {
       id: '/captcha/emotion'
       path: '/captcha/emotion'
@@ -177,9 +217,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRoute,
   CompleteRoute: CompleteRoute,
   CaptchaCounterRoute: CaptchaCounterRoute,
   CaptchaEmotionRoute: CaptchaEmotionRoute,
+  CaptchaEthosRoute: CaptchaEthosRoute,
   CaptchaGolfRoute: CaptchaGolfRoute,
   CaptchaRhythmRoute: CaptchaRhythmRoute,
   CaptchaStopRoute: CaptchaStopRoute,
