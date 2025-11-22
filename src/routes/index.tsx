@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+
 import { Button } from "../components/Button";
 import { useApp } from "../contexts/AppContext";
 import EunoiaLogo from "../assets/Eunoia.svg";
@@ -11,14 +11,6 @@ export const Route = createFileRoute("/")({
 function LandingPage() {
   const navigate = useNavigate();
   const { resetProgress } = useApp();
-  const [showDialog, setShowDialog] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setShowDialog(true);
-    }, 10000);
-    return () => window.clearTimeout(timer);
-  }, []);
 
   const handleBegin = () => {
     resetProgress();
@@ -38,18 +30,19 @@ function LandingPage() {
             Access Panel
           </span>
         </div>
-        <div className="mt-6 space-y-4">
+        <div className="mt-12 space-y-4">
           <h1 className="text-3xl font-semibold text-white">
-            Verify your signal to unlock the feed.
+            Verify the human in you
           </h1>
-          <p className="text-slate-300">
-            Ethos runs a micro-gauntlet of presence checks. Once cleared, your
-            Eunoia timeline opens instantly and stays unlocked for 24 hours.
+          <p className="text-slate-300 max-w-2xl">
+            This moment is about shared trust. Your identity confirmation is
+            essential to proceed. It protects our collective security and data.
           </p>
         </div>
         <div className="mt-6 flex flex-wrap gap-4">
-          <Button onClick={handleBegin}>Begin Ethos Sequence</Button>
-          <Button variant="secondary">Explain process</Button>
+          <Button variant="danger" onClick={handleBegin}>
+            Begin Ethos Sequence
+          </Button>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-3 text-sm text-slate-300">
           <div>
@@ -66,27 +59,6 @@ function LandingPage() {
           </div>
         </div>
       </div>
-
-      {showDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-md space-y-4 rounded-3xl bg-white p-8 shadow-2xl">
-            <h2 className="text-2xl font-semibold text-slate-900">
-              Quick identity refresh
-            </h2>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              To keep Eunoia free of AI interference, we need to rerun the Ethos
-              captcha. It only takes a moment and unlocks the social feed for
-              the next 24 hours.
-            </p>
-            <div className="flex justify-end gap-3">
-              <Button variant="secondary" onClick={() => setShowDialog(false)}>
-                Later
-              </Button>
-              <Button onClick={handleBegin}>Go to Ethos Captcha</Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -33,9 +33,6 @@ function LandingBackdrop() {
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
             <img src={EunoiaLogo} alt="Eunoia" className="w-32" />
             <div className="flex gap-3 text-sm">
-              <div className="rounded-full bg-white/10 px-4 py-2 uppercase tracking-[0.3em]">
-                Log in
-              </div>
               <div className="rounded-full bg-white text-[#0d2c6f] px-4 py-2 uppercase tracking-[0.3em]">
                 Sign up
               </div>
