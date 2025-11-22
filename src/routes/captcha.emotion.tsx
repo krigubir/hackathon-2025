@@ -13,17 +13,36 @@ export const Route = createFileRoute("/captcha/emotion")({
 type Emotion = "happy" | "sad" | "angry" | "fearful" | "surprised" | "neutral";
 
 interface EmotionChallenge {
-  imageUrl: string;
   correctEmotion: Emotion;
   description: string;
 }
 
 const VIDEO_OPTIONS: Array<{ value: Emotion; label: string }> = [
-  { value: "happy", label: "Option 1 – replace with actual emotion" },
-  { value: "sad", label: "Option 2 – replace with actual emotion" },
-  { value: "angry", label: "Option 3 – replace with actual emotion" },
-  { value: "fearful", label: "Option 4 – replace with actual emotion" },
-  { value: "surprised", label: "Option 5 – replace with actual emotion" },
+  {
+    value: "angry",
+    label:
+      "Simmering resentment—voices raised, brows furrowed, both partners rigid as they contest the bill.",
+  },
+  {
+    value: "fearful",
+    label:
+      "Restrained panic—one partner glances around the bar, worried the dispute will spiral or draw attention.",
+  },
+  {
+    value: "sad",
+    label:
+      "Wounded disappointment—hurt eyes and sighs imply the argument is really about unmet expectations.",
+  },
+  {
+    value: "surprised",
+    label:
+      "Incredulous shock—brows shoot up as if blindsided that who-pays-now became a public confrontation.",
+  },
+  {
+    value: "neutral",
+    label:
+      "Calculated detachment—voices kept flat, as though each partner is coldly negotiating the bill split.",
+  },
 ];
 
 function EmotionCaptcha() {
@@ -32,9 +51,9 @@ function EmotionCaptcha() {
 
   // In production, use actual human face images
   const [challenge] = useState<EmotionChallenge>({
-    imageUrl: "https://picsum.photos/400/400?random=emotion",
-    correctEmotion: "happy",
-    description: "A person showing genuine happiness",
+    correctEmotion: "neutral",
+    description:
+      "Calculated detachment—voices kept flat, as though each partner is coldly negotiating the bill split.",
   });
 
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
@@ -163,7 +182,7 @@ function EmotionCaptcha() {
           message={
             passed
               ? "Correct! Emotional intelligence verified."
-              : `Incorrect. The correct answer was ${challenge.correctEmotion.toUpperCase()}.`
+              : `Incorrect. Your empathy signature is non-compliant. A human's emotional assessment should be immediate. Your response deviates 14% from the 'Optimal Human Baseline.' Please try again.`
           }
         />
       )}
