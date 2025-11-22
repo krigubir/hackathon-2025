@@ -26,77 +26,46 @@ function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#f6fbff] via-[#f2f5ff] to-white text-foreground">
-      <header className="bg-[#0d2c6f] text-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-          <img src={EunoiaLogo} alt="Eunoia" className="w-32" />
-          <div className="flex gap-3 text-sm">
-            <button className="rounded-full bg-white/10 px-4 py-2 uppercase tracking-[0.3em]">
-              Log in
-            </button>
-            <button className="rounded-full bg-white text-[#0d2c6f] px-4 py-2 uppercase tracking-[0.3em]">
-              Sign up
-            </button>
+    <div className="space-y-6 text-slate-100">
+      <div className="rounded-[32px] border border-white/20 bg-[#060b1e]/95 p-10 shadow-[0_40px_130px_rgba(1,3,12,0.65)] backdrop-blur-3xl">
+        <div className="flex items-center gap-4">
+          <img
+            src={EunoiaLogo}
+            alt="Eunoia"
+            className="w-32 drop-shadow-[0_10px_40px_rgba(93,137,255,0.35)]"
+          />
+          <span className="text-xs uppercase tracking-[0.45em] text-slate-400">
+            Access Panel
+          </span>
+        </div>
+        <div className="mt-6 space-y-4">
+          <h1 className="text-3xl font-semibold text-white">
+            Verify your signal to unlock the feed.
+          </h1>
+          <p className="text-slate-300">
+            Ethos runs a micro-gauntlet of presence checks. Once cleared, your
+            Eunoia timeline opens instantly and stays unlocked for 24 hours.
+          </p>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-4">
+          <Button onClick={handleBegin}>Begin Ethos Sequence</Button>
+          <Button variant="secondary">Explain process</Button>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3 text-sm text-slate-300">
+          <div>
+            <p className="font-semibold text-white">1. Initiate</p>
+            <p>We launch the Ethos captcha from within this safe shell.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">2. Confirm</p>
+            <p>Complete the rhythm, timing, and empathy sequences.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">3. Return</p>
+            <p>Eunoia refreshes and lets you into the AI-free commons.</p>
           </div>
         </div>
-      </header>
-
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-6 py-16 md:flex-row md:items-center md:justify-between">
-        <section className="space-y-6">
-          <h1 className="text-5xl font-semibold text-slate-900 leading-tight">
-            The first social platform that refuses AI ghosts.
-          </h1>
-          <p className="text-lg text-slate-600 leading-relaxed">
-            Eunoia celebrates unfiltered presence—handwritten notes, ambient
-            voice rooms, spontaneous check-ins. Every interaction is anchored to
-            a living, breathing human. No bots. No synthetic personas. Just
-            friends, memory, and shared presence.
-          </p>
-          <p className="text-slate-500 text-base leading-relaxed">
-            Ethos verification runs quietly in the background every time you
-            visit. When it confirms you, your Eunoia home unlocks with zero
-            friction.
-          </p>
-          <div className="flex gap-3">
-            <Button onClick={handleBegin}>Enter Now</Button>
-            <Button variant="secondary">Learn More</Button>
-          </div>
-        </section>
-        <section className="glass-panel w-full max-w-md space-y-6 border border-white/70 bg-white/60 p-8 text-left shadow-2xl backdrop-blur-xl">
-          <p className="text-xs uppercase tracking-[0.45em] text-slate-500">
-            Life inside Eunoia
-          </p>
-          <ul className="space-y-4 text-sm text-slate-600">
-            <li>
-              <span className="font-semibold text-slate-900">
-                Pulse Circles
-              </span>
-              <p className="text-slate-500">
-                Micro-community rooms calibrated for calm, chaotic, or focused
-                dialogue—pick the mood live.
-              </p>
-            </li>
-            <li>
-              <span className="font-semibold text-slate-900">
-                Echo Journals
-              </span>
-              <p className="text-slate-500">
-                Daily reflections shared privately or with your trust graph,
-                archived permanently for your future self.
-              </p>
-            </li>
-            <li>
-              <span className="font-semibold text-slate-900">
-                Human Signals
-              </span>
-              <p className="text-slate-500">
-                Ethos-certified status badges, so everyone knows they’re
-                speaking with a real mind.
-              </p>
-            </li>
-          </ul>
-        </section>
-      </main>
+      </div>
 
       {showDialog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -110,9 +79,10 @@ function LandingPage() {
               the next 24 hours.
             </p>
             <div className="flex justify-end gap-3">
-              <Button variant="danger" onClick={handleBegin}>
-                Go to Ethos Captcha
+              <Button variant="secondary" onClick={() => setShowDialog(false)}>
+                Later
               </Button>
+              <Button onClick={handleBegin}>Go to Ethos Captcha</Button>
             </div>
           </div>
         </div>
