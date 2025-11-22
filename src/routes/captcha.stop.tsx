@@ -15,7 +15,7 @@ const TARGET_POSITION = (BAR_WIDTH - TARGET_SIZE) / 2;
 const SPEED = 4; // pixels per frame
 const TOLERANCE = 30; // pixels
 
-function StopCaptcha() {
+export function StopCaptcha() {
   const navigate = useNavigate();
   const { markCaptchaComplete, incrementAttempts } = useApp();
 
