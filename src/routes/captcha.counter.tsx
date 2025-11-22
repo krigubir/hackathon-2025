@@ -47,10 +47,18 @@ function CounterCaptcha() {
 
           setTimeout(() => {
             if (videoRef.current) {
+              videoRef.current.muted = false;
+              videoRef.current.volume = 1;
               videoRef.current.playbackRate = 1;
-              videoRef.current.play().catch(() => videoRef.current?.play());
+
+              videoRef.current
+                .play()
+                .catch((err) => {
+                  console.log("Playback failed:", err);
+                });
             }
           }, 150);
+
 
           return 1;
         }
@@ -129,12 +137,12 @@ function CounterCaptcha() {
         ------------------------------ */}
         {stage === "instructions" && (
           <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-card">
-            <video
-              src={BunnyVideo}
-              className="h-full w-full object-cover opacity-60"
-              muted
-              playsInline
-            />
+          <video
+            src={BunnyVideo}
+            className="h-full w-full object-cover opacity-60"
+            playsInline
+          />
+
 
             <div className="absolute inset-0 flex items-center justify-center">
               <Button
