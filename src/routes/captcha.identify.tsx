@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
-import { CaptchaContainer } from '../components/CaptchaContainer';
-import { Button } from '../components/Button';
-import { ResultScreen } from '../components/ResultScreen';
-import { useApp } from '../contexts/AppContext';
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { CaptchaContainer } from "../components/CaptchaContainer";
+import { Button } from "../components/Button";
+import { ResultScreen } from "../components/ResultScreen";
+import { useApp } from "../contexts/AppContext";
 
-export const Route = createFileRoute('/captcha/identify')({
+export const Route = createFileRoute("/captcha/identify")({
   component: IdentifyCaptcha,
 });
 
@@ -21,7 +21,7 @@ interface GridCell {
 function IdentifyCaptcha() {
   const navigate = useNavigate();
   const { markCaptchaComplete, incrementAttempts } = useApp();
-  
+
   // Generate grid with some cells containing the "target"
   const targetIndices = [3, 7, 11]; // Cells that contain the tiny bicycle
   const [grid] = useState<GridCell[]>(() => {
@@ -51,28 +51,34 @@ function IdentifyCaptcha() {
   };
 
   const handleVerify = () => {
-    const correctSelections = targetIndices.filter(id => selected.has(id)).length;
-    const incorrectSelections = Array.from(selected).filter(id => !targetIndices.includes(id)).length;
-    
-    const isCorrect = correctSelections === targetIndices.length && incorrectSelections === 0;
-    
+    const correctSelections = targetIndices.filter((id) =>
+      selected.has(id)
+    ).length;
+    const incorrectSelections = Array.from(selected).filter(
+      (id) => !targetIndices.includes(id)
+    ).length;
+
+    const isCorrect =
+      correctSelections === targetIndices.length && incorrectSelections === 0;
+
     if (isCorrect) {
       setPassed(true);
       setShowResult(true);
-      markCaptchaComplete('identify', true);
+      markCaptchaComplete("identify", true);
     } else {
-      setAttempts(prev => prev + 1);
-      incrementAttempts('identify');
-      
+      setAttempts((prev) => prev + 1);
+      incrementAttempts("identify");
+
       if (attempts >= 1) {
         setShowHint(true);
       }
-      
+
       // Show feedback without result screen, let them try again
-      const message = correctSelections < targetIndices.length
-        ? 'Some targets are missing from your selection.'
-        : 'You selected squares that do not contain the target.';
-      
+      const message =
+        correctSelections < targetIndices.length
+          ? "Some targets are missing from your selection."
+          : "You selected squares that do not contain the target.";
+
       alert(`Verification Failed: ${message}`);
     }
   };
@@ -85,7 +91,7 @@ function IdentifyCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: '/captcha/golf' });
+    navigate({ to: "/captcha/emotion" });
   };
 
   return (
@@ -100,14 +106,16 @@ function IdentifyCaptcha() {
               Visual Target
             </p>
             <p className="text-accent-bright font-semibold">
-              SELECT ALL SQUARES WITH: <span className="text-xl">🚲 BICYCLE</span>
+              SELECT ALL SQUARES WITH:{" "}
+              <span className="text-xl">🚲 BICYCLE</span>
             </p>
           </div>
         </div>
 
         {showHint && (
           <div className="rounded-2xl border border-white/15 bg-white/5 p-4 text-sm text-muted animate-fade-in">
-            💡 Hint: Look at the corners and edges of each image. Some bicycles are very small.
+            💡 Hint: Look at the corners and edges of each image. Some bicycles
+            are very small.
           </div>
         )}
 
@@ -157,7 +165,8 @@ function IdentifyCaptcha() {
         </div>
 
         <p className="text-xs text-muted text-center">
-          Note: In production, images would be carefully curated with hidden objects.
+          Note: In production, images would be carefully curated with hidden
+          objects.
         </p>
       </div>
 
@@ -171,4 +180,3 @@ function IdentifyCaptcha() {
     </CaptchaContainer>
   );
 }
-

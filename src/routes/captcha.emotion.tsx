@@ -81,7 +81,7 @@ function EmotionCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: "/complete" });
+    navigate({ to: "/captcha/golf" });
   };
 
   return (

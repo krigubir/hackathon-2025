@@ -12,12 +12,7 @@ function LandingPage() {
 
   const handleBegin = () => {
     resetProgress();
-    navigate({ to: "/captcha/rhythm" });
-  };
-
-  const scrollToProtocol = () => {
-    const element = document.getElementById("protocol-card");
-    element?.scrollIntoView({ behavior: "smooth" });
+    navigate({ to: "/captcha/stop" });
   };
 
   return (
@@ -79,12 +74,11 @@ function LandingPage() {
                     Sequence
                   </div>
                   <ul className="space-y-2 text-sm text-foreground/80">
-                    <li>01. Rhythm Cognition</li>
-                    <li>02. Extreme Counting</li>
-                    <li>03. Micro-object Detection</li>
-                    <li>04. Precision Motor Control</li>
-                    <li>05. Reaction Integrity</li>
-                    <li>06. Emotion Recognition</li>
+                    <li>01. Extreme Counting</li>
+                    <li>02. Micro-object Detection</li>
+                    <li>03. Precision Motor Control</li>
+                    <li>04. Reaction Integrity</li>
+                    <li>05. Emotion Recognition</li>
                   </ul>
                 </div>
                 <p className="text-xs text-muted">
