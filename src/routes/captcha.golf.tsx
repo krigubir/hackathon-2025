@@ -360,7 +360,7 @@ function GolfCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: "/captcha/stop" });
+    navigate({ to: "/captcha/counter" });
   };
 
   return (

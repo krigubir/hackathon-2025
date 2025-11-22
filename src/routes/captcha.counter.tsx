@@ -115,7 +115,7 @@ function CounterCaptcha() {
   };
 
   const handleContinue = () => {
-    navigate({ to: "/captcha/identify" });
+    navigate({ to: "/complete" });
   };
 
   return (

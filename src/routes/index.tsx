@@ -12,12 +12,7 @@ function LandingPage() {
 
   const handleBegin = () => {
     resetProgress();
-    navigate({ to: "/captcha/rhythm" });
-  };
-
-  const scrollToProtocol = () => {
-    const element = document.getElementById("protocol-card");
-    element?.scrollIntoView({ behavior: "smooth" });
+    navigate({ to: "/captcha/stop" });
   };
 
   return (
@@ -30,17 +25,16 @@ function LandingPage() {
               Protocol // V-7.2
             </div>
             <h1 className="text-5xl sm:text-6xl font-bold leading-tight heading-glow">
-              Human Verification Standard for Future Shock Societies
+              The 2025 standard for human verification
             </h1>
             <p className="text-lg text-muted leading-relaxed">
-              Civilization now requires irrefutable proof of humanity. Complete a gauntlet of
-              high-fidelity cognition, coordination, and empathy challenges crafted to expose even
-              the most advanced AI imposters.
+              Civilization now requires irrefutable proof of humanity. Complete
+              a gauntlet of high-fidelity cognition, coordination, and empathy
+              challenges crafted to expose even the most advanced AI imposters.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Button onClick={handleBegin}>Begin Verification</Button>
-              <Button variant="secondary" type="button" onClick={scrollToProtocol}>
-                View Protocol Brief
+            <div className="flex flex-wrap gap-4 ">
+              <Button variant="danger" onClick={handleBegin}>
+                Begin Verification
               </Button>
             </div>
             <div className="flex flex-wrap gap-8 text-sm text-muted">
@@ -67,24 +61,29 @@ function LandingPage() {
             <div className="glass-panel relative p-8">
               <div className="grid-lines" />
               <div className="relative z-10 space-y-6">
-                <p className="text-sm uppercase tracking-[0.4em] text-accent-neon/70">System Notice</p>
+                <p className="text-sm uppercase tracking-[0.4em] text-accent-neon/70">
+                  Ethos notice:
+                </p>
                 <p className="text-foreground/90 leading-relaxed">
-                  Verification is mandatory for access to core infrastructure. All attempts are logged,
-                  analyzed, and cross-referenced with global identity registries.
+                  This moment is about shared trust. Your identity confirmation
+                  is essential to proceed. It protects our collective security
+                  and data. Thank you for maintaining this collaboration
                 </p>
                 <div className="border border-border-glow/50 rounded-2xl p-5">
-                  <div className="text-xs text-muted uppercase tracking-[0.5em] mb-3">Sequence</div>
+                  <div className="text-xs text-muted uppercase tracking-[0.5em] mb-3">
+                    Sequence
+                  </div>
                   <ul className="space-y-2 text-sm text-foreground/80">
-                    <li>01. Rhythm Cognition</li>
-                    <li>02. Extreme Counting</li>
-                    <li>03. Micro-object Detection</li>
-                    <li>04. Precision Motor Control</li>
-                    <li>05. Reaction Integrity</li>
-                    <li>06. Emotion Recognition</li>
+                    <li>01. Extreme Counting</li>
+                    <li>02. Micro-object Detection</li>
+                    <li>03. Precision Motor Control</li>
+                    <li>04. Reaction Integrity</li>
+                    <li>05. Emotion Recognition</li>
                   </ul>
                 </div>
                 <p className="text-xs text-muted">
-                  Protocol Version 7.2.4 • Compliance Level: Mandated by the Global Human Registry Council
+                  Protocol Version 7.2.4 • Compliance Level: Mandated by the
+                  Global Human Registry Council
                 </p>
               </div>
             </div>
@@ -94,4 +93,3 @@ function LandingPage() {
     </section>
   );
 }
-
