@@ -5,83 +5,106 @@ import { Button } from "../components/Button";
 import { ResultScreen } from "../components/ResultScreen";
 import { useApp } from "../contexts/AppContext";
 
+import BunnyVideo from "../assets/masterpiece.mov";
+import BunnyHappy from "../assets/bigbuckbunnyhappy.png";
+import BunnyAngry from "../assets/bigbuckbunnyah.png";
+
 export const Route = createFileRoute("/captcha/counter")({
   component: CounterCaptcha,
 });
 
-// Placeholder video - in production, replace with actual video URL
-const VIDEO_URL =
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-const CORRECT_COUNT = 15; // The actual number of repetitions in the video
-const ACCEPTABLE_RANGE = 2; // Allow ±2 margin of error
+const CORRECT_COUNT = 92;
 
 function CounterCaptcha() {
   const navigate = useNavigate();
   const { markCaptchaComplete, incrementAttempts } = useApp();
 
-  const [stage, setStage] = useState<"instructions" | "playing" | "answering">(
-    "instructions"
+  const [stage, setStage] = useState(
+    /** @type {"instructions" | "countdown" | "playing" | "answering" | "reaction"} */
+    ("instructions")
   );
+
+  const [countdown, setCountdown] = useState(3);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [passed, setPassed] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  // -----------------------------------------
+  // COUNTDOWN
+  // -----------------------------------------
+  useEffect(() => {
+    if (stage !== "countdown") return;
+
+    setCountdown(3);
+
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(interval);
+          setStage("playing");
+
+          setTimeout(() => {
+            if (videoRef.current) {
+              videoRef.current.playbackRate = 1;
+              videoRef.current.play().catch(() => videoRef.current?.play());
+            }
+          }, 150);
+
+          return 1;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [stage]);
+
+  // -----------------------------------------
+  // END OF VIDEO → ANSWERING
+  // -----------------------------------------
   useEffect(() => {
     const video = videoRef.current;
     if (!video || stage !== "playing") return;
-
-    let speedIncrement = 0;
-    const intervalId = setInterval(() => {
-      speedIncrement += 0.3;
-      const newSpeed = Math.min(1 + speedIncrement, 3.5);
-      setPlaybackSpeed(newSpeed);
-      video.playbackRate = newSpeed;
-    }, 2000);
 
     const handleEnded = () => {
       setStage("answering");
     };
 
     video.addEventListener("ended", handleEnded);
-
-    return () => {
-      clearInterval(intervalId);
-      video.removeEventListener("ended", handleEnded);
-    };
+    return () => video.removeEventListener("ended", handleEnded);
   }, [stage]);
 
-  const startVideo = () => {
-    setStage("playing");
-    setPlaybackSpeed(1);
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 1;
-      videoRef.current.play();
-    }
+  const beginWithCountdown = () => {
+    setStage("countdown");
   };
 
   const answers = [
-    CORRECT_COUNT - 5,
-    CORRECT_COUNT - 2,
+    CORRECT_COUNT + 41,
     CORRECT_COUNT,
-    CORRECT_COUNT + 3,
-    CORRECT_COUNT + 7,
-  ].sort(() => Math.random() - 0.5);
+    CORRECT_COUNT - 23,
+    CORRECT_COUNT + 78,
+    CORRECT_COUNT + 120,
+  ];
 
   const handleSubmit = () => {
     if (selectedAnswer === null) return;
 
-    const isCorrect =
-      Math.abs(selectedAnswer - CORRECT_COUNT) <= ACCEPTABLE_RANGE;
+    const isCorrect = selectedAnswer === CORRECT_COUNT;
     setPassed(isCorrect);
-    setShowResult(true);
+    setStage("reaction");
 
     if (isCorrect) {
-      markCaptchaComplete("counter", true);
+      setTimeout(() => {
+        markCaptchaComplete("counter", true);
+        setShowResult(true);
+      }, 2000);
     } else {
       incrementAttempts("counter");
+      setTimeout(() => {
+        handleRetry();
+      }, 2000);
     }
   };
 
@@ -89,7 +112,6 @@ function CounterCaptcha() {
     setShowResult(false);
     setStage("instructions");
     setSelectedAnswer(null);
-    setPlaybackSpeed(1);
   };
 
   const handleContinue = () => {
@@ -99,61 +121,76 @@ function CounterCaptcha() {
   return (
     <CaptchaContainer
       title="REPETITION COUNT VERIFICATION"
-      description="Count the number of times the action repeats in the video. The video will accelerate to test your attention span."
+      description="Count the number of times Big Buck Bunny skips rope."
     >
       <div className="space-y-6">
+        {/* -----------------------------
+            INSTRUCTIONS (VIDEO + START BUTTON)
+        ------------------------------ */}
         {stage === "instructions" && (
-          <div className="text-center py-10 space-y-8">
-            <p className="text-muted text-base max-w-3xl mx-auto">
-              You will watch a short surveillance clip. Count every time the
-              subject performs the assigned action. Expect exponential speed
-              escalation.
-            </p>
-            <div className="gradient-border max-w-xl mx-auto">
-              <div className="glass-panel p-6 text-left">
-                <p className="text-xs uppercase tracking-[0.5em] text-accent-neon/70 mb-3">
-                  Target Metric
-                </p>
-                <p className="text-2xl font-semibold text-accent-bright">
-                  COUNT: Rabbit jumps
-                </p>
-              </div>
+          <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-card">
+            <video
+              src={BunnyVideo}
+              className="h-full w-full object-cover opacity-60"
+              muted
+              playsInline
+            />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Button
+                variant="secondary"
+                onClick={beginWithCountdown}
+              >
+                Start
+              </Button>
             </div>
-            <Button onClick={startVideo}>Begin Video</Button>
           </div>
         )}
 
-        {stage === "playing" && (
-          <div className="space-y-5">
-            <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-muted">
-              <span>Current Speed</span>
-              <span className="text-accent-neon font-semibold text-lg">
-                {playbackSpeed.toFixed(1)}x
+        {/* -----------------------------
+            COUNTDOWN (over video)
+        ------------------------------ */}
+        {stage === "countdown" && (
+          <div className="relative aspect-video overflow-hidden rounded-3xl border border-white/10 bg-black shadow-card">
+            <video
+              ref={videoRef}
+              src={BunnyVideo}
+              className="h-full w-full object-cover"
+              muted
+              playsInline
+            />
+
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <span className="text-7xl font-extrabold text-white drop-shadow-lg animate-pulse">
+                {countdown}
               </span>
             </div>
-            <div className="relative aspect-video overflow-hidden rounded-3xl border border-white/10 bg-black shadow-card">
-              <video
-                ref={videoRef}
-                src={VIDEO_URL}
-                className="h-full w-full object-cover"
-                playsInline
-                muted
-              />
-              <div className="absolute top-4 right-4 rounded-full bg-black/70 px-4 py-1 text-accent-bright text-sm font-semibold">
-                {playbackSpeed.toFixed(1)}x
-              </div>
-            </div>
-            <p className="text-center text-muted text-sm">
-              Focus and count carefully. The video cannot be paused or replayed.
-            </p>
           </div>
         )}
 
+        {/* -----------------------------
+            PLAYING VIDEO
+        ------------------------------ */}
+        {stage === "playing" && (
+          <div className="relative aspect-video overflow-hidden rounded-3xl border border-white/10 bg-black shadow-card">
+            <video
+              ref={videoRef}
+              src={BunnyVideo}
+              className="h-full w-full object-cover"
+              playsInline
+              muted
+            />
+          </div>
+        )}
+
+        {/* -----------------------------
+            ANSWERING
+        ------------------------------ */}
         {stage === "answering" && (
           <div className="space-y-8">
             <div className="text-center">
               <h3 className="text-2xl font-semibold heading-glow mb-2">
-                How many times did the rabbit jump?
+                How many times did Big Buck Bunny skip rope?
               </h3>
               <p className="text-muted text-sm">Select your answer</p>
             </div>
@@ -181,6 +218,23 @@ function CounterCaptcha() {
             </div>
           </div>
         )}
+
+        {/* -----------------------------
+            REACTION IMAGE
+        ------------------------------ */}
+        {stage === "reaction" && (
+          <div className="flex items-center justify-center py-10">
+            <img
+              src={passed ? BunnyHappy : BunnyAngry}
+              alt="Reaction"
+              className={`max-h-80 object-contain animate-fade rounded-3xl ${
+                passed
+                  ? "shadow-[0_0_40px_10px_rgba(0,255,120,0.8)]"
+                  : "shadow-[0_0_40px_10px_rgba(255,0,80,0.8)]"
+              }`}
+            />
+          </div>
+        )}
       </div>
 
       {showResult && (
@@ -188,13 +242,11 @@ function CounterCaptcha() {
           passed={passed}
           onRetry={handleRetry}
           onContinue={handleContinue}
-          message={
-            passed
-              ? `Correct! The answer was ${CORRECT_COUNT}.`
-              : `Incorrect. The correct answer was ${CORRECT_COUNT}.`
-          }
+          message={`Correct! The answer was ${CORRECT_COUNT}.`}
         />
       )}
     </CaptchaContainer>
   );
 }
+
+export default CounterCaptcha;
